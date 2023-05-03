@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // User Schema
 const TodoSchema = new mongoose.Schema({
-    username: {type: String, required: true},
+    email: {type: String, required: true},
     reminder: {type: String, required: true},
     completed: {type: Boolean, required: true, default: false}
 })

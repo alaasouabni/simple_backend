@@ -9,11 +9,11 @@ const router = Router();
 
 // Index Route with isLoggedIn middleware
 router.get("/", isLoggedIn, async (req, res) => {
-  const { username } = req.user; // get username from req.user property created by isLoggedIn middleware
-  //console.log(username);
+  const { email } = req.user; // get username from req.user property created by isLoggedIn middleware
+  console.log(email);
   //send all todos with that user
   res.json(
-    await Todo.find({ username }).catch((error) =>
+    await Todo.find({ email }).catch((error) =>
       res.status(400).json({ error })
     )
   );
@@ -21,11 +21,11 @@ router.get("/", isLoggedIn, async (req, res) => {
 
 // Show Route with isLoggedIn middleware
 router.get("/:id", isLoggedIn, async (req, res) => {
-  const { username } = req.user; // get username from req.user property created by isLoggedIn middleware
+  const { email } = req.user; // get username from req.user property created by isLoggedIn middleware
   const _id = req.params.id; // get id from params
   //send target todo
   res.json(
-    await Todo.findOne({ username, _id }).catch((error) =>
+    await Todo.findOne({ email, _id }).catch((error) =>
       res.status(400).json({ error })
     )
   );
@@ -33,8 +33,8 @@ router.get("/:id", isLoggedIn, async (req, res) => {
 
 // create Route with isLoggedIn middleware
 router.post("/", isLoggedIn, async (req, res) => {
-  const { username } = req.user; // get username from req.user property created by isLoggedIn middleware
-  req.body.username = username; // add username property to req.body
+  const { email } = req.user; // get username from req.user property created by isLoggedIn middleware
+  req.body.email = email; // add username property to req.body
   //create new todo and send it in response
   res.json(
     await Todo.create(req.body).catch((error) =>
@@ -45,12 +45,12 @@ router.post("/", isLoggedIn, async (req, res) => {
 
 // update Route with isLoggedIn middleware
 router.put("/:id", isLoggedIn, async (req, res) => {
-  const { username } = req.user; // get username from req.user property created by isLoggedIn middleware
-  req.body.username = username; // add username property to req.body
+  const { email } = req.user; // get username from req.user property created by isLoggedIn middleware
+  req.body.email = email; // add username property to req.body
   const _id = req.params.id;
   //update todo with same id if belongs to logged in User
   res.json(
-    await Todo.updateOne({ username, _id }, req.body, { new: true }).catch(
+    await Todo.updateOne({ email, _id }, req.body, { new: true }).catch(
       (error) => res.status(400).json({ error })
     )
   );
@@ -58,11 +58,11 @@ router.put("/:id", isLoggedIn, async (req, res) => {
 
 // update Route with isLoggedIn middleware
 router.delete("/:id", isLoggedIn, async (req, res) => {
-  const { username } = req.user; // get username from req.user property created by isLoggedIn middleware
+  const { email } = req.user; // get username from req.user property created by isLoggedIn middleware
   const _id = req.params.id;
   //remove todo with same id if belongs to logged in User
   res.json(
-    await Todo.remove({ username, _id }).catch((error) =>
+    await Todo.remove({ email, _id }).catch((error) =>
       res.status(400).json({ error })
     )
   );
